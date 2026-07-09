@@ -340,7 +340,7 @@ import torch
 from torch import Tensor
 
 
-def merge_heads_and_project_output(context: Tensor, w_o: Tensor, b_o: Tensor | None):
+def merge_heads_and_project_output(context: Tensor, w_o: Tensor, b_o: Tensor | None = None):
     '''merge the head axis back into d_model and apply the output linear projection.'''
 
     return apply_linear_projection(merge_heads_back_to_model_dim(context), w_o, b_o)
