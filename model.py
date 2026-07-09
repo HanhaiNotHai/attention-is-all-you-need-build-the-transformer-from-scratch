@@ -113,6 +113,7 @@ import torch
 
 def build_sinusoidal_positional_encoding(max_len: int, d_model: int):
     """Assemble the (max_len, d_model) sinusoidal positional encoding matrix."""
+
     pe = torch.zeros(max_len, d_model)
     position = build_position_index_column(max_len)
     div_term = compute_positional_div_term(d_model)
