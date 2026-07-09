@@ -102,6 +102,8 @@ from torch import Tensor
 
 
 def fill_odd_indices_with_cos(pe: Tensor, position: Tensor, div_term: Tensor):
+    '''fill the odd-indexed columns of pe with cos(position * div_term)'''
+
     pe[:, 1::2] = torch.cos(position * div_term)
     return pe
 
