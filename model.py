@@ -127,8 +127,13 @@ def build_causal_mask(seq_len: int):
     """Return a (1, 1, seq_len, seq_len) bool mask, True on and below diagonal."""
     return torch.ones(1, 1, seq_len, seq_len, dtype=torch.bool).tril()
 
-# Step 16 - combine_padding_and_causal_masks (not yet solved)
-# TODO: implement
+# Step 16 - combine_padding_and_causal_masks
+import torch
+from torch import Tensor
+
+
+def combine_padding_and_causal_masks(padding_mask: Tensor, causal_mask: Tensor):
+    return padding_mask & causal_mask
 
 # Step 17 - compute_raw_attention_scores (not yet solved)
 # TODO: implement
