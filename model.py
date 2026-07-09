@@ -162,9 +162,10 @@ def combine_padding_and_causal_masks(padding_mask: Tensor, causal_mask: Tensor):
 
 # Step 17 - compute_raw_attention_scores
 import torch
+from torch import Tensor
 
 
-def compute_raw_attention_scores(query, key):
+def compute_raw_attention_scores(query: Tensor, key: Tensor):
     """Compute raw attention scores Q @ K^T over the last two dimensions."""
 
     return torch.einsum('...ld,...id->...li', query, key)
