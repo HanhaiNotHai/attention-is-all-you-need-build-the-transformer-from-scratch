@@ -92,6 +92,7 @@ from torch import Tensor
 
 def fill_even_indices_with_sin(pe: Tensor, position: Tensor, div_term: Tensor):
     """Fill even feature indices of pe with sin(position * div_term)."""
+
     pe[:, ::2] = torch.sin(position * div_term)
     return pe
 
