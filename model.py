@@ -36,8 +36,13 @@ def decode_ids_to_tokens(ids: list[int], id_to_token: dict[int, str]):
 def pad_id_sequence(ids: list[int], max_len: int, pad_id: int):
     return ids[:max_len] + [pad_id] * (max_len - len(ids))
 
-# Step 6 - stack_padded_sequences_to_batch (not yet solved)
-# TODO: implement
+# Step 6 - stack_padded_sequences_to_batch
+import torch
+
+
+def stack_padded_sequences_to_batch(padded_sequences: list[list[int]]):
+    """Stack a list of equal-length padded id sequences into a 2D LongTensor batch."""
+    return torch.LongTensor(padded_sequences)
 
 # Step 7 - scale_embeddings_by_sqrt_d_model (not yet solved)
 # TODO: implement
