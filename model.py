@@ -301,8 +301,11 @@ def project_to_query_key_value(
 ):
     '''project x into separate query, key, and value tensors via three linear layers'''
 
-    return map(
-        lambda wb: apply_linear_projection(x, wb[0], wb[1]), ((w_q, b_q), (w_k, b_k), (w_v, b_v))
+    return tuple(
+        map(
+            lambda wb: apply_linear_projection(x, wb[0], wb[1]),
+            ((w_q, b_q), (w_k, b_k), (w_v, b_v)),
+        )
     )
 
 # Step 28 - split_qkv_into_heads (not yet solved)
