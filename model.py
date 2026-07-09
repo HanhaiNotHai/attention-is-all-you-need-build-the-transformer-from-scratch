@@ -295,9 +295,9 @@ def project_to_query_key_value(
     w_q: Tensor,
     b_q: Tensor,
     w_k: Tensor,
-    b_k: Tensor | None,
-    w_v: Tensor | None,
-    b_v: Tensor | None,
+    b_k: Tensor | None = None,
+    w_v: Tensor | None = None,
+    b_v: Tensor | None = None,
 ):
     '''project x into separate query, key, and value tensors via three linear layers'''
 
