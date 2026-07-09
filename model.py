@@ -221,8 +221,26 @@ def apply_attention_weights_to_values(attention_weights: Tensor, value: Tensor):
 
     return torch.einsum('...li,...id->...ld', attention_weights, value)
 
-# Step 22 - scaled_dot_product_attention (not yet solved)
-# TODO: implement
+# Step 22 - scaled_dot_product_attention
+import torch
+from torch import Tensor
+
+
+def scaled_dot_product_attention(
+    query: Tensor, key: Tensor, value: Tensor, mask: Tensor | None = None
+):
+    """Run scaled dot-product attention; return (context, attention_weights)."""
+
+    raw_attention_scores = compute_raw_attention_scores(query, key)
+    attention_scores = scale_attention_scores(raw_attention_scores, query.shape[-1])
+    masked_scores = (
+        attention_scores
+        if mask is None
+        else mask_attention_scores_with_neg_inf(attention_scores, mask)
+    )
+    attention_weights = softmax_attention_weights(masked_scores)
+    context = apply_attention_weights_to_values(attention_weights, value)
+    return context, attention_weights
 
 # Step 23 - split_last_dim_into_heads (not yet solved)
 # TODO: implement
