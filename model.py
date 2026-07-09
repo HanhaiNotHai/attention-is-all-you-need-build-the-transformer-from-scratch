@@ -286,8 +286,24 @@ def apply_linear_projection(x: Tensor, weight: Tensor, bias: Tensor | None):
         y += bias
     return y
 
-# Step 27 - project_to_query_key_value (not yet solved)
-# TODO: implement
+# Step 27 - project_to_query_key_value
+from torch import Tensor
+
+
+def project_to_query_key_value(
+    x: Tensor,
+    w_q: Tensor,
+    b_q: Tensor,
+    w_k: Tensor,
+    b_k: Tensor | None,
+    w_v: Tensor | None,
+    b_v: Tensor | None,
+):
+    '''project x into separate query, key, and value tensors via three linear layers'''
+
+    return map(
+        lambda wb: apply_linear_projection(x, wb[0], wb[1]), ((w_q, b_q), (w_k, b_k), (w_v, b_v))
+    )
 
 # Step 28 - split_qkv_into_heads (not yet solved)
 # TODO: implement
