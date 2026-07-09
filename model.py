@@ -170,8 +170,17 @@ def compute_raw_attention_scores(query: Tensor, key: Tensor):
 
     return torch.einsum('...ld,...id->...li', query, key)
 
-# Step 18 - scale_attention_scores (not yet solved)
-# TODO: implement
+# Step 18 - scale_attention_scores
+import math
+
+import torch
+from torch import Tensor
+
+
+def scale_attention_scores(scores: Tensor, d_k: int):
+    '''divide raw attention scores by sqrt(d_k) to stabilize softmax inputs'''
+
+    return scores / math.sqrt(d_k)
 
 # Step 19 - mask_attention_scores_with_neg_inf (not yet solved)
 # TODO: implement
