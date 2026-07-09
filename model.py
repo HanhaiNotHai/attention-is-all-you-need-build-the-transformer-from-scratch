@@ -138,6 +138,7 @@ from torch import Tensor
 
 def build_padding_mask(token_ids: Tensor, pad_id: int):
     """Return a (B, 1, 1, L) bool mask: True where token_ids != pad_id."""
+
     return (token_ids != pad_id)[:, None, None, :]
 
 # Step 15 - build_causal_mask
