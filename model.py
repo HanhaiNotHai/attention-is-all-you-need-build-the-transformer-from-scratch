@@ -21,7 +21,7 @@ def build_token_to_id_vocab(
     return vocab
 
 # Step 2 - build_id_to_token_vocab
-def build_id_to_token_vocab(token_to_id: dict[str:int]):
+def build_id_to_token_vocab(token_to_id: dict[str, int]):
     return {i: token for token, i in token_to_id.items()}
 
 # Step 3 - encode_sentence_to_ids
