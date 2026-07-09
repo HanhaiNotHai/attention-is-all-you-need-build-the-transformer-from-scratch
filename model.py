@@ -369,8 +369,22 @@ def assemble_multi_head_attention_forward(
     context, _ = multi_head_scaled_dot_product_attention(q_h, k_h, v_h, mask)
     return merge_heads_and_project_output(context, w_o)
 
-# Step 32 - apply_ffn_first_linear_and_relu (not yet solved)
-# TODO: implement
+# Step 32 - apply_ffn_first_linear_and_relu
+import torch
+from torch import Tensor
+
+
+def relu(x: Tensor):
+    return x.maximum(torch.tensor(0))
+
+
+def apply_ffn_first_linear_and_relu(x: Tensor, w1: Tensor, b1: Tensor | None = None):
+    '''project x by w1, add b1, then apply a ReLU activation.'''
+
+    y = torch.einsum('...m,mf->...f', x, w1)
+    if b1 is not None:
+        y += b1
+    return relu(y)
 
 # Step 33 - apply_ffn_second_linear (not yet solved)
 # TODO: implement
