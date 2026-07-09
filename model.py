@@ -278,7 +278,7 @@ import torch
 from torch import Tensor
 
 
-def apply_linear_projection(x: Tensor, weight: Tensor, bias: Tensor | None):
+def apply_linear_projection(x: Tensor, weight: Tensor, bias: Tensor | None = None):
     '''return x @ weight^T + bias (bias may be None) with shape (..., out_features)'''
 
     y = torch.einsum('...i,oi->...o', x, weight)
