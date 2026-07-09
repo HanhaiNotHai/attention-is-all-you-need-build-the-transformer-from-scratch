@@ -59,7 +59,7 @@ def scale_embeddings_by_sqrt_d_model(embeddings: Tensor, d_model: int):
 import torch
 
 
-def compute_positional_div_term(d_model):
+def compute_positional_div_term(d_model: int):
     return 10000 ** (-torch.arange(0, d_model, 2) / d_model)
 
 # Step 9 - build_position_index_column
