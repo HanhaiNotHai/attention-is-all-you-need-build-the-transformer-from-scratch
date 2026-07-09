@@ -42,6 +42,8 @@ def decode_ids_to_tokens(ids: list[int], id_to_token: dict[int, str]):
 
 # Step 5 - pad_id_sequence
 def pad_id_sequence(ids: list[int], max_len: int, pad_id: int):
+    '''return a list of length exactly max_len, padding with pad_id or truncating.'''
+
     return ids[:max_len] + [pad_id] * (max_len - len(ids))
 
 # Step 6 - stack_padded_sequences_to_batch
