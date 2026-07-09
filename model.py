@@ -308,8 +308,20 @@ def project_to_query_key_value(
         )
     )
 
-# Step 28 - split_qkv_into_heads (not yet solved)
-# TODO: implement
+# Step 28 - split_qkv_into_heads
+import torch
+from torch import Tensor
+
+
+def split_qkv_into_heads(q: Tensor, k: Tensor, v: Tensor, num_heads: int):
+    '''split each of q, k, v into (B, num_heads, L, d_k) and return as a tuple'''
+
+    return tuple(
+        map(
+            lambda x: transpose_heads_before_sequence(split_last_dim_into_heads(x, num_heads)),
+            (q, k, v),
+        )
+    )
 
 # Step 29 - multi_head_scaled_dot_product_attention (not yet solved)
 # TODO: implement
