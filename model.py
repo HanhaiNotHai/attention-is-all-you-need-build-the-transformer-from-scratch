@@ -24,8 +24,9 @@ def build_token_to_id_vocab(
 def build_id_to_token_vocab(token_to_id: dict[str:int]):
     return {i: token for token, i in token_to_id.items()}
 
-# Step 3 - encode_sentence_to_ids (not yet solved)
-# TODO: implement
+# Step 3 - encode_sentence_to_ids
+def encode_sentence_to_ids(sentence: str, token_to_id: dict[str, int], unk_token: str = '<unk>'):
+    return [token_to_id.get(token, token_to_id[unk_token]) for token in sentence.split()]
 
 # Step 4 - decode_ids_to_tokens (not yet solved)
 # TODO: implement
