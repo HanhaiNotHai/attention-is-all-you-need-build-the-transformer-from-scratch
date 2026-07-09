@@ -445,8 +445,29 @@ def apply_dropout_with_keep_mask(x: Tensor, keep_mask: Tensor, keep_prob: float)
 
     return x * keep_mask / keep_prob
 
-# Step 39 - encoder_layer_self_attention_sublayer (not yet solved)
-# TODO: implement
+# Step 39 - encoder_layer_self_attention_sublayer
+from torch import Tensor
+
+
+def encoder_layer_self_attention_sublayer(
+    x: Tensor,
+    w_q: Tensor,
+    w_k: Tensor,
+    w_v: Tensor,
+    w_o: Tensor,
+    gamma: Tensor,
+    beta: Tensor,
+    num_heads: int,
+    src_mask: Tensor | None = None,
+):
+    '''run multi-head self-attention on x and wrap with residual add-and-norm.'''
+
+    return apply_residual_add_and_norm(
+        x,
+        assemble_multi_head_attention_forward(x, x, x, w_q, w_k, w_v, w_o, num_heads, src_mask),
+        gamma,
+        beta,
+    )
 
 # Step 40 - encoder_layer_feed_forward_sublayer (not yet solved)
 # TODO: implement
