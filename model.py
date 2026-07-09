@@ -386,8 +386,18 @@ def apply_ffn_first_linear_and_relu(x: Tensor, w1: Tensor, b1: Tensor | None = N
         y += b1
     return relu(y)
 
-# Step 33 - apply_ffn_second_linear (not yet solved)
-# TODO: implement
+# Step 33 - apply_ffn_second_linear
+import torch
+from torch import Tensor
+
+
+def apply_ffn_second_linear(hidden: Tensor, w2: Tensor, b2: Tensor | None = None):
+    '''project hidden (..., d_ff) back to (..., d_model) via w2 and b2.'''
+
+    y = torch.einsum('...f,fm->...m', hidden, w2)
+    if b2 is not None:
+        y += b2
+    return y
 
 # Step 34 - position_wise_feed_forward_network (not yet solved)
 # TODO: implement
