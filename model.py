@@ -211,8 +211,15 @@ def softmax_attention_weights(masked_scores: Tensor):
     # Fully masked rows should have zero attention weights.
     return weights.masked_fill(all_masked, 0.0)
 
-# Step 21 - apply_attention_weights_to_values (not yet solved)
-# TODO: implement
+# Step 21 - apply_attention_weights_to_values
+import torch
+from torch import Tensor
+
+
+def apply_attention_weights_to_values(attention_weights: Tensor, value: Tensor):
+    """Multiply attention weights by the value matrix to produce context vectors."""
+
+    return torch.einsum('...li,...id->...ld', attention_weights, value)
 
 # Step 22 - scaled_dot_product_attention (not yet solved)
 # TODO: implement
