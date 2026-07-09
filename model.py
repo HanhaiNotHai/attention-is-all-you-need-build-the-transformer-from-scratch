@@ -10,6 +10,8 @@ import numpy as np
 def build_token_to_id_vocab(
     sentences: list[str], specials: tuple[str] = ('<pad>', '<bos>', '<eos>', '<unk>')
 ):
+    '''build a token-to-id dict with specials first, then corpus tokens in first-seen order.'''
+
     vocab = {x: i for i, x in enumerate(specials)}
     i = len(specials)
     for sentence in sentences:
