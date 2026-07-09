@@ -242,8 +242,15 @@ def scaled_dot_product_attention(
     context = apply_attention_weights_to_values(attention_weights, value)
     return context, attention_weights
 
-# Step 23 - split_last_dim_into_heads (not yet solved)
-# TODO: implement
+# Step 23 - split_last_dim_into_heads
+import torch
+from torch import Tensor
+
+
+def split_last_dim_into_heads(tensor: Tensor, num_heads: int):
+    '''reshape (B, L, d_model) into (B, L, num_heads, d_model // num_heads)'''
+
+    return tensor.reshape(*tensor.shape[:-1], num_heads, -1)
 
 # Step 24 - transpose_heads_before_sequence (not yet solved)
 # TODO: implement
