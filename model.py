@@ -127,6 +127,8 @@ from torch import Tensor
 
 
 def add_positional_encoding_to_embeddings(embedded_batch: Tensor, positional_encoding: Tensor):
+    '''add the first L rows of positional_encoding to embedded_batch and return the sum.'''
+
     return embedded_batch + positional_encoding[None, : embedded_batch.shape[1]]
 
 # Step 14 - build_padding_mask
