@@ -442,8 +442,14 @@ def apply_residual_add_and_norm(
 
     return normalize_and_scale_with_gamma_beta(residual_input + sublayer_output, gamma, beta, eps)
 
-# Step 38 - apply_dropout_with_keep_mask (not yet solved)
-# TODO: implement
+# Step 38 - apply_dropout_with_keep_mask
+from torch import Tensor
+
+
+def apply_dropout_with_keep_mask(x: Tensor, keep_mask: Tensor, keep_prob: float):
+    '''multiply x by the boolean keep_mask and rescale by 1/keep_prob.'''
+
+    return x * keep_mask / keep_prob
 
 # Step 39 - encoder_layer_self_attention_sublayer (not yet solved)
 # TODO: implement
