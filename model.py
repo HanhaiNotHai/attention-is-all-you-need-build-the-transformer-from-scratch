@@ -64,6 +64,7 @@ from torch import Tensor
 
 def scale_embeddings_by_sqrt_d_model(embeddings: Tensor, d_model: int):
     """Scale a token embedding tensor by sqrt(d_model)."""
+
     return embeddings * math.sqrt(d_model)
 
 # Step 8 - compute_positional_div_term
