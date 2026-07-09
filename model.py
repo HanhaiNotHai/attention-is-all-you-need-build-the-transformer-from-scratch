@@ -147,6 +147,7 @@ import torch
 
 def build_causal_mask(seq_len: int):
     """Return a (1, 1, seq_len, seq_len) bool mask, True on and below diagonal."""
+
     return torch.ones(1, 1, seq_len, seq_len, dtype=torch.bool).tril()
 
 # Step 16 - combine_padding_and_causal_masks
