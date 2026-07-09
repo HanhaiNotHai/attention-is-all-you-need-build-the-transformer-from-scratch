@@ -469,8 +469,18 @@ def encoder_layer_self_attention_sublayer(
         beta,
     )
 
-# Step 40 - encoder_layer_feed_forward_sublayer (not yet solved)
-# TODO: implement
+# Step 40 - encoder_layer_feed_forward_sublayer
+from torch import Tensor
+
+
+def encoder_layer_feed_forward_sublayer(
+    x: Tensor, w1: Tensor, b1: Tensor, w2: Tensor, b2: Tensor, gamma: Tensor, beta: Tensor
+):
+    '''run the position-wise FFN on x and wrap it with residual add-and-norm.'''
+
+    return apply_residual_add_and_norm(
+        x, position_wise_feed_forward_network(x, w1, b1, w2, b2), gamma, beta
+    )
 
 # Step 41 - assemble_encoder_layer (not yet solved)
 # TODO: implement
