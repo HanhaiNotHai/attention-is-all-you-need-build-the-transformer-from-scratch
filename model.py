@@ -32,8 +32,9 @@ def encode_sentence_to_ids(sentence: str, token_to_id: dict[str, int], unk_token
 def decode_ids_to_tokens(ids: list[int], id_to_token: dict[int, str]):
     return [id_to_token[i] for i in ids]
 
-# Step 5 - pad_id_sequence (not yet solved)
-# TODO: implement
+# Step 5 - pad_id_sequence
+def pad_id_sequence(ids: list[int], max_len: int, pad_id: int):
+    return ids[:max_len] + [pad_id] * (max_len - len(ids))
 
 # Step 6 - stack_padded_sequences_to_batch (not yet solved)
 # TODO: implement
