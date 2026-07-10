@@ -1043,7 +1043,9 @@ def compute_batch_training_loss(
     smoothed_distribution = set_confidence_on_gold_tokens(
         smoothed_distribution, tgt_batch, 1 - smoothing
     )
-    smoothed_distribution = zero_pad_column_and_pad_token_rows(smoothed_distribution,tgt_batch,pad_id)
+    smoothed_distribution = zero_pad_column_and_pad_token_rows(
+        smoothed_distribution, tgt_batch, pad_id
+    )
 
     total_loss = compute_label_smoothed_kl_loss(log_probabilities, smoothed_distribution)
 
