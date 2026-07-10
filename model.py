@@ -690,8 +690,19 @@ def tie_output_projection_to_token_embeddings(token_embedding_weight: Tensor):
 
     return token_embedding_weight.transpose(0, 1)
 
-# Step 50 - apply_log_softmax_over_vocab (not yet solved)
-# TODO: implement
+# Step 50 - apply_log_softmax_over_vocab
+import torch
+from torch import Tensor
+
+
+def logsoftmax(x: Tensor):
+    return x - torch.log(torch.sum(torch.exp(x), dim=-1, keepdim=True))
+
+
+def apply_log_softmax_over_vocab(logits: Tensor):
+    '''Convert decoder logits (B, T, V) into log probabilities over the vocabulary axis.'''
+
+    return logsoftmax(logits)
 
 # Step 51 - run_transformer_forward (not yet solved)
 # TODO: implement
