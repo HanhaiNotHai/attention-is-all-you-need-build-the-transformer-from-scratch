@@ -842,8 +842,17 @@ def collect_model_parameters_into_list(
         )
     )
 
-# Step 56 - shift_targets_right_with_start_token (not yet solved)
-# TODO: implement
+# Step 56 - shift_targets_right_with_start_token
+import torch
+from torch import Tensor
+
+
+def shift_targets_right_with_start_token(target_ids: Tensor, start_token_id: int):
+    '''prepend start_token_id and drop the last column so output shape matches target_ids'''
+
+    return torch.cat(
+        [torch.full((*target_ids.shape[:-1], 1), start_token_id), target_ids[:, :-1]], dim=-1
+    )
 
 # Step 57 - compute_noam_learning_rate (not yet solved)
 # TODO: implement
