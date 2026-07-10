@@ -583,8 +583,19 @@ def decoder_layer_cross_attention_sublayer(
         beta,
     )
 
-# Step 45 - decoder_layer_feed_forward_sublayer (not yet solved)
-# TODO: implement
+# Step 45 - decoder_layer_feed_forward_sublayer
+import torch
+from torch import Tensor
+
+
+def decoder_layer_feed_forward_sublayer(
+    y: Tensor, w1: Tensor, b1: Tensor, w2: Tensor, b2: Tensor, gamma: Tensor, beta: Tensor
+):
+    '''run the position-wise FFN on y and wrap it with residual add-and-norm'''
+
+    return apply_residual_add_and_norm(
+        y, position_wise_feed_forward_network(y, w1, b1, w2, b2), gamma, beta
+    )
 
 # Step 46 - assemble_decoder_layer (not yet solved)
 # TODO: implement
