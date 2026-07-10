@@ -769,8 +769,40 @@ def init_encoder_layer_parameters(d_model: int, num_heads: int, d_ff: int):
         'ffn_beta': torch.zeros(d_model, requires_grad=True),
     }
 
-# Step 53 - init_decoder_layer_parameters (not yet solved)
-# TODO: implement
+# Step 53 - init_decoder_layer_parameters
+import math
+
+import torch
+from torch.nn.init import kaiming_uniform_, xavier_uniform_
+
+
+def init_decoder_layer_parameters(d_model: int, num_heads: int, d_ff: int):
+    '''return a dict of requires_grad tensors for one decoder layer'''
+
+    return {
+        'w_q_self': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_k_self': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_v_self': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_o_self': kaiming_uniform_(
+            torch.empty(d_model, d_model, requires_grad=True), a=math.sqrt(5)
+        ),
+        'w_q_cross': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_k_cross': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_v_cross': xavier_uniform_(torch.empty(d_model, d_model, requires_grad=True)),
+        'w_o_cross': kaiming_uniform_(
+            torch.empty(d_model, d_model, requires_grad=True), a=math.sqrt(5)
+        ),
+        'w1': kaiming_uniform_(torch.empty(d_model, d_ff, requires_grad=True), a=math.sqrt(5)),
+        'b1': torch.zeros(d_ff, requires_grad=True),
+        'w2': kaiming_uniform_(torch.empty(d_ff, d_model, requires_grad=True), a=math.sqrt(5)),
+        'b2': torch.zeros(d_model, requires_grad=True),
+        'self_gamma': torch.ones(d_model, requires_grad=True),
+        'self_beta': torch.zeros(d_model, requires_grad=True),
+        'cross_gamma': torch.ones(d_model, requires_grad=True),
+        'cross_beta': torch.zeros(d_model, requires_grad=True),
+        'ffn_gamma': torch.ones(d_model, requires_grad=True),
+        'ffn_beta': torch.zeros(d_model, requires_grad=True),
+    }
 
 # Step 54 - init_embedding_and_projection_parameters (not yet solved)
 # TODO: implement
