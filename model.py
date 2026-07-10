@@ -572,7 +572,7 @@ def decoder_layer_cross_attention_sublayer(
 ):
     '''run multi-head cross-attention (Q from y, K/V from encoder_output) and wrap with add-and-norm'''
 
-    if src_mask is not None:
+    if src_mask is not None and len(src_mask.shape) == 2:
         src_mask = src_mask[:, None, None, :]
     return apply_residual_add_and_norm(
         y,
