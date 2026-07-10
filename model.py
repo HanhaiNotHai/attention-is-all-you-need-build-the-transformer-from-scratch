@@ -719,10 +719,14 @@ def run_transformer_forward(
 
     max_len = max(src_ids.shape[1], tgt_ids.shape[1])
 
-    token_embedding: Tensor = model_params['token_embedding']
-    _, d_model = token_embedding.shape
-    x = token_embedding[src_ids]
-    y = token_embedding[tgt_ids]
+    if 'token_embedding' in model_params:
+        src_embedding = tgt_embedding = model_params['token_embedding']
+    else:
+        src_embedding: Tensor = model_params['src_embedding']
+        tgt_embedding: Tensor = model_params['tgt_embedding']
+    x = src_embedding[src_ids]
+    y = tgt_embedding[tgt_ids]
+    d_model = x.shape[-1]
 
     x, y = map(lambda x: scale_embeddings_by_sqrt_d_model(x, d_model), (x, y))
 
