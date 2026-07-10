@@ -854,8 +854,11 @@ def shift_targets_right_with_start_token(target_ids: Tensor, start_token_id: int
         [torch.full((*target_ids.shape[:-1], 1), start_token_id), target_ids[:, :-1]], dim=-1
     )
 
-# Step 57 - compute_noam_learning_rate (not yet solved)
-# TODO: implement
+# Step 57 - compute_noam_learning_rate
+def compute_noam_learning_rate(step: int, d_model: int, warmup_steps: int) -> float:
+    '''return the Noam warmup learning rate for the given step.'''
+
+    return d_model ** (-1 / 2) * min(step ** (-1 / 2), step * warmup_steps ** (-3 / 2))
 
 # Step 58 - build_uniform_smoothing_distribution (not yet solved)
 # TODO: implement
