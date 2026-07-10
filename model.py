@@ -929,8 +929,18 @@ def compute_token_accuracy_ignoring_pad(
     correct = (predictions == gold_token_ids) & mask
     return correct.sum() / mask.sum().clamp_min(1)
 
-# Step 64 - initialize_adam_optimizer_state (not yet solved)
-# TODO: implement
+# Step 64 - initialize_adam_optimizer_state
+import torch
+from torch import Tensor
+
+
+def initialize_adam_optimizer_state(parameter_list: list[Tensor]):
+    """Allocate Adam m, v zero buffers and a step counter t=0."""
+
+    def zero_buffers():
+        return list(map(torch.zeros_like, parameter_list))
+
+    return {'m': zero_buffers(), 'v': zero_buffers(), 't': 0}
 
 # Step 65 - update_adam_first_moment (not yet solved)
 # TODO: implement
