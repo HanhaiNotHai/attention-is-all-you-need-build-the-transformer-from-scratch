@@ -1013,9 +1013,37 @@ def zero_all_parameter_gradients(parameter_list: list[Tensor]):
         p.grad = None
 
 # Step 71 - compute_batch_training_loss
-def compute_batch_training_loss(src_batch, tgt_batch, model_params, config):
-    # TODO: shift targets right, run the forward pass, build smoothed targets, and average the KL loss over non-pad tokens.
-    pass
+from torch import Tensor
+
+
+def compute_batch_training_loss(
+    src_batch: Tensor,
+    tgt_batch: Tensor,
+    model_params: dict[str, list[dict[str, Tensor]] | Tensor],
+    config: dict[str, int | float],
+):
+    '''shift targets right, run the forward pass, build smoothed targets, and average the KL loss over non-pad tokens.'''
+
+    pad_id = config['pad_id']
+    smoothing = config['smoothing']
+
+    decoder_input = shift_targets_right_with_start_token(tgt_batch, config['start_id'])
+
+    log_probabilities = run_transformer_forward(
+        src_batch, decoder_input, model_params, config['num_heads'], pad_id
+    )
+
+    smoothed_distribution = build_uniform_smoothing_distribution(
+        log_probabilities.shape, config['vocab_size'], smoothing
+    )
+    smoothed_distribution = set_confidence_on_gold_tokens(
+        smoothed_distribution, tgt_batch, 1 - smoothing
+    )
+    smoothed_distribution = zero_pad_column_and_pad_token_rows(smoothed_distribution,tgt_batch,pad_id)
+
+    total_loss = compute_label_smoothed_kl_loss(log_probabilities, smoothed_distribution)
+
+    return average_loss_over_non_pad_tokens(total_loss, tgt_batch, pad_id)
 
 # Step 72 - run_training_step_with_backprop (not yet solved)
 # TODO: implement
