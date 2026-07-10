@@ -804,8 +804,23 @@ def init_decoder_layer_parameters(d_model: int, num_heads: int, d_ff: int):
         'ffn_beta': torch.zeros(d_model, requires_grad=True),
     }
 
-# Step 54 - init_embedding_and_projection_parameters (not yet solved)
-# TODO: implement
+# Step 54 - init_embedding_and_projection_parameters
+import torch
+
+
+def init_embedding_and_projection_parameters(vocab_size, d_model, tie_weights=True):
+    """Allocate src/tgt embeddings and output projection (optionally tied)."""
+
+    src_embedding = torch.randn(vocab_size, d_model, requires_grad=True)
+    tgt_embedding = torch.randn(vocab_size, d_model, requires_grad=True)
+    output_projection = (
+        tgt_embedding if tie_weights else torch.randn(vocab_size, d_model, requires_grad=True)
+    )
+    return {
+        'src_embedding': src_embedding,
+        'tgt_embedding': tgt_embedding,
+        'output_projection': output_projection,
+    }
 
 # Step 55 - collect_model_parameters_into_list (not yet solved)
 # TODO: implement
