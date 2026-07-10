@@ -972,8 +972,34 @@ def apply_adam_bias_correction(m_t: Tensor, v_t: Tensor, beta1: float, beta2: fl
 
     return m_t / (1 - beta1**step), v_t / (1 - beta2**step)
 
-# Step 69 - apply_adam_step_to_all_parameters (not yet solved)
-# TODO: implement
+# Step 69 - apply_adam_step_to_all_parameters
+import torch
+from torch import Tensor
+
+
+def apply_adam_step_to_all_parameters(
+    parameter_list: list[Tensor],
+    optimizer_state: dict[str, list[Tensor] | int],
+    learning_rate: float,
+    beta1: float = 0.9,
+    beta2: float = 0.98,
+    epsilon: float = 1e-9,
+):
+    '''increment t, then for each param with a grad update m, v, bias-correct, and subtract delta in place.'''
+
+    optimizer_state['t'] += 1
+    t = optimizer_state['t']
+
+    for p, m, v in zip(parameter_list, optimizer_state['m'], optimizer_state['v']):
+        if p.grad is None:
+            continue
+        m[:] = update_adam_first_moment(m, p.grad, beta1)
+        v[:] = update_adam_second_moment(v, p.grad, beta2)
+        m_hat, v_hat = apply_adam_bias_correction(m, v, beta1, beta2, t)
+        with torch.inference_mode():
+            p.data.sub_(learning_rate * m_hat / (torch.sqrt(v_hat) + epsilon))
+
+    return optimizer_state
 
 # Step 70 - zero_all_parameter_gradients (not yet solved)
 # TODO: implement
