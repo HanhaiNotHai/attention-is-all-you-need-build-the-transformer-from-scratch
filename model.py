@@ -744,8 +744,29 @@ def run_transformer_forward(
 
     return log_probs
 
-# Step 52 - init_encoder_layer_parameters (not yet solved)
-# TODO: implement
+# Step 52 - init_encoder_layer_parameters
+import math
+
+import torch
+
+
+def init_encoder_layer_parameters(d_model: int, num_heads: int, d_ff: int):
+    """Return a dict of leaf tensors with requires_grad=True for one encoder layer."""
+
+    return {
+        'w_q': torch.rand(d_model, d_model, requires_grad=True),
+        'w_k': torch.rand(d_model, d_model, requires_grad=True),
+        'w_v': torch.rand(d_model, d_model, requires_grad=True),
+        'w_o': torch.rand(d_model, d_model, requires_grad=True),
+        'w1': torch.rand(d_model, d_ff, requires_grad=True),
+        'b1': torch.zeros(d_ff, requires_grad=True),
+        'w2': torch.rand(d_ff, d_model, requires_grad=True),
+        'b2': torch.zeros(d_model, requires_grad=True),
+        'attn_gamma': torch.ones(d_model, requires_grad=True),
+        'attn_beta': torch.zeros(d_model, requires_grad=True),
+        'ffn_gamma': torch.ones(d_model, requires_grad=True),
+        'ffn_beta': torch.zeros(d_model, requires_grad=True),
+    }
 
 # Step 53 - init_decoder_layer_parameters (not yet solved)
 # TODO: implement
