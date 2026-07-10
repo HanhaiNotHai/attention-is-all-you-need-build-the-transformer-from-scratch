@@ -724,6 +724,8 @@ def run_transformer_forward(
     x = token_embedding[src_ids]
     y = token_embedding[tgt_ids]
 
+    x, y = map(lambda x: scale_embeddings_by_sqrt_d_model(x, d_model), (x, y))
+
     pe = build_sinusoidal_positional_encoding(max_len, d_model)
     x, y = map(lambda x: add_positional_encoding_to_embeddings(x, pe), (x, y))
 
