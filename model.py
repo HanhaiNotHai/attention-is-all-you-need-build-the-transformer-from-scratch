@@ -704,8 +704,43 @@ def apply_log_softmax_over_vocab(logits: Tensor):
 
     return logsoftmax(logits)
 
-# Step 51 - run_transformer_forward (not yet solved)
-# TODO: implement
+# Step 51 - run_transformer_forward
+from torch import Tensor
+
+
+def run_transformer_forward(
+    src_ids: Tensor,
+    tgt_ids: Tensor,
+    model_params: dict[str, Tensor | list[dict[str, Tensor]]],
+    num_heads: int,
+    pad_id: int,
+):
+    '''embed src+tgt, add PE, build masks, run encoder/decoder, project to log probs.'''
+
+    max_len = max(src_ids.shape[1], tgt_ids.shape[1])
+
+    token_embedding: Tensor = model_params['token_embedding']
+    _, d_model = token_embedding.shape
+    x = token_embedding[src_ids]
+    y = token_embedding[tgt_ids]
+
+    pe = build_sinusoidal_positional_encoding(max_len, d_model)
+    x, y = map(lambda x: add_positional_encoding_to_embeddings(x, pe), (x, y))
+
+    src_mask = build_padding_mask(src_ids, pad_id)
+    tgt_mask = build_padding_mask(tgt_ids, pad_id)
+    causal_mask = build_causal_mask(tgt_ids.shape[1])
+    tgt_mask = combine_padding_and_causal_masks(tgt_mask, causal_mask)
+
+    encoder_output = stack_encoder_layers(x, model_params['encoder_layers'], num_heads, src_mask)
+    decoder_output = stack_decoder_layers(
+        y, encoder_output, model_params['decoder_layers'], num_heads, src_mask, tgt_mask
+    )
+
+    logits = apply_final_output_projection(decoder_output, model_params['output_projection'])
+    log_probs = apply_log_softmax_over_vocab(logits)
+
+    return log_probs
 
 # Step 52 - init_encoder_layer_parameters (not yet solved)
 # TODO: implement
