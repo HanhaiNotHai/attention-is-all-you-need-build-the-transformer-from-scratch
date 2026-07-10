@@ -724,7 +724,7 @@ def run_transformer_forward(
     else:
         src_embedding: Tensor = model_params['src_embedding']
         tgt_embedding: Tensor = model_params['tgt_embedding']
-        model_params['token_embedding'] = tgt_embedding.copy_()
+        model_params['token_embedding'] = tgt_embedding.detach()
     x = src_embedding[src_ids]
     y = tgt_embedding[tgt_ids]
     d_model = x.shape[-1]
