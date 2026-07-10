@@ -1012,8 +1012,10 @@ def zero_all_parameter_gradients(parameter_list: list[Tensor]):
     for p in parameter_list:
         p.grad = None
 
-# Step 71 - compute_batch_training_loss (not yet solved)
-# TODO: implement
+# Step 71 - compute_batch_training_loss
+def compute_batch_training_loss(src_batch, tgt_batch, model_params, config):
+    # TODO: shift targets right, run the forward pass, build smoothed targets, and average the KL loss over non-pad tokens.
+    pass
 
 # Step 72 - run_training_step_with_backprop (not yet solved)
 # TODO: implement
