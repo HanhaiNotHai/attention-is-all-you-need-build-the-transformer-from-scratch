@@ -662,8 +662,20 @@ def stack_decoder_layers(
         y = assemble_decoder_layer(y, encoder_output, layer_params, num_heads, src_mask, tgt_mask)
     return y
 
-# Step 48 - apply_final_output_projection (not yet solved)
-# TODO: implement
+# Step 48 - apply_final_output_projection
+from torch import Tensor
+
+
+def apply_final_output_projection(
+    decoder_output: Tensor,
+    output_projection_weight: Tensor,
+    output_projection_bias: Tensor | None = None,
+):
+    '''project decoder hidden states (B, T, D) to vocabulary logits (B, T, V).'''
+
+    return apply_linear_projection(
+        decoder_output, output_projection_weight, output_projection_bias
+    )
 
 # Step 49 - tie_output_projection_to_token_embeddings (not yet solved)
 # TODO: implement
