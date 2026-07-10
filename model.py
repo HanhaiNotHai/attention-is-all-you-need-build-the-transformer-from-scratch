@@ -942,8 +942,15 @@ def initialize_adam_optimizer_state(parameter_list: list[Tensor]):
 
     return {'m': zero_buffers(), 'v': zero_buffers(), 't': 0}
 
-# Step 65 - update_adam_first_moment (not yet solved)
-# TODO: implement
+# Step 65 - update_adam_first_moment
+import torch
+from torch import Tensor
+
+
+def update_adam_first_moment(m_prev: Tensor, grad: Tensor, beta1: float):
+    """Return m_t = beta1 * m_prev + (1 - beta1) * grad."""
+
+    return beta1 * m_prev + (1 - beta1) * grad
 
 # Step 66 - update_adam_second_moment (not yet solved)
 # TODO: implement
